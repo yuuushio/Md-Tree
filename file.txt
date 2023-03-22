@@ -1,17 +1,4 @@
-- Main item 1
-  - Sub-item 1.1
-    - Sub-sub-item 1.1.1
-    - Sub-sub-item 1.1.2
-  - Sub-item 1.2
-    - Numbered sub-sub-item 1.2.1
-    - Numbered sub-sub-item 1.2.2
-      - s3
-- Main item 2
-  - Sub-item 2.1
-    - Sub-sub-item 2.1.1
-  - Sub-item 2.2
-    - Sub-sub-item 2.2.1
-    - Sub-sub-item 2.2.2
-      - s-s-s-item 2.2.2.1
-    - sub-sub-item 2.2.3
-      - s3
+- m.i. 1
+  - s.i 1.1
+- m.i. 2
+  - s.i 2.1

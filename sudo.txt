@@ -1,11 +1,92 @@
+# get the outer indexes of depth d
+calc_outer(arr, d):
+  index_arr = [] 
+  for i,item in enumerate(arr):
+    if item.depth == d:
+      index_arr.append(i)
 
-recurse(i, items):
-  if i == len(items)-1:
-    // does not have a child/is the child
+  index_add
 
+recurse(arr, start, end, pre_space_str):
+  size = start - end
+  if size == 0:
+    return
+  elif size == 1:
+    print(pre_space_str + arr[start].val) 
   else:
-    // when there is a i+1 node, 3 options:
-    //    - i+1 has a None parent -- depth = 0
-    //    - i is NOT the parent of i+1 but its parent is not None either -- recurse(i, index-1, parent_index-1)
+    ind_arr = calc_outer(arr, arr[start].depth)
+    for i in ind_arr:
+      // 1 item
 
-    //    - i is the parent of i+1 -- print?; recurse(i, items)
+    print(pre_space_str + arr[start])
+
+print_func(st_obj, pre_space):
+  // check if st_obj is last of its depth and print accoringly
+  // might have to pass in the length of the array 
+  //   (whether the whole array lengh or sub-length, prob doesnt matter since we recurse)
+
+// recurse 2
+recurse(arr, start, pre_space_str):
+  // ind_arr = calc_outer(arr, arr[start].depth)
+  for i,ind in enumerate(arr):
+    // ind_arr == 0 - base case
+    print("")
+    return
+    
+    // ind_arr == 1
+    print_func(pre_space_str + arr[ind].val)
+    return
+
+    // else, print + recurse + indent
+    // 
+    print_func(pre_space_str + arr[ind].val)
+    if arr[ind].is_last:
+      pre_space_str += "    "
+      recurse(arr, start+1, pre_space_str)
+    else:
+      // have to take into consideration the depth
+      // only diff is whether you add "|" or not
+      // you only want to indent by the difference between the current-depth - ...
+      pre_space_str += "|   "
+
+
+recurse3(arr, start, end, pre_space_str):
+  ind_arr = calc_outer(arr, arr[start].depth) // each recurse you'd be doing this and going thru n items
+  for i,ind in enumerate(ind_arr):
+    // if len(ind_arr) == 0
+    return
+
+    // if len(ind_arr) == 1
+    print_func(pre_space_str, arr[ind])
+    return
+
+    // else len(ind_arr) > 1 
+    // if start < end: add "|   " ...; should be fine since this node will be an indented node
+    //    gotta check if it's last or not tho
+    if start < end:
+      print_func(pre_space_str + arr[start].val)
+      pre_space_str += "|   "
+      recurse3(arr, start+1, ind_arr[i+1], pre_space_str)
+    
+    // elif start >= end: add "    "
+    //  - if there is no another end (end == ind_arr[-1]), every node up till len(arr) does not have a bar
+    if end == ind_arr[-1]:
+    // we're at the last node of the whatever depth
+      // either we're in a nested list
+
+    //  - if there is another end [end < ind_arr[-1]], set start = end, end = ind_arr[i + 1]
+
+
+main():
+  recurse(st_add, 0, len(st_arr), "")
+
+
+
+
+
+
+NOTES:
+- if the parent is null, just dont put the bar for depth level 1, but if the pre_space contained the bar, then
+thats fine. let previous nodes determine the bar_string at previous depths. depth 1 will worry about a bar being
+there at depth 0 (if parent.is_last, dont put bar at depth 0 if current depth is 1). depth 2 will worry about
+there being a bar at depth 1 (but takes over the previous depth's pre_space)
