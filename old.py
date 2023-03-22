@@ -95,21 +95,33 @@ def tst(zzz):
     for z in zzz:
         z.print_val()
 
-def print_func():
-    pass
 
-def print_grid(d_arr):
-    for li in d_arr:
-        print(li)
+def build_tree(items):
+    text = []
 
-def magic(arr):
-    # i'th item can have a max depth of i
-    # item 0, d=0
-    # item 1, d=0,1 
-    # item 2, d=0,1,2
-    grid = [[None if j!=0 else "" for j in range(len(arr))] for i in range(len(arr))]
-    print_grid(grid)
+    for i in items:
+        # strips everything till the first character after the bullet point
+        tmp = re.sub(r"^\s*[-*+]\s+", "", i.val)
+        text.append(tmp.strip())
 
+    # There is a correlation between indent and depth
+    # We probably don't even need to calculate the parents since everything can be done using depth
+    for i in range(len(items)):
+        # if the current node is the child/last node
+        # if i + 1 == len(items):
+        #     print("│   " * (items[i].depth-1) + "└── " + text[i])
+        # # if the next node is not the child of the current, nor is it in line with it
+        # elif items[i + 1].depth < items[i].depth:
+        #     print("│   " * (items[i].depth-1) + "└── " + text[i])
+
+        if items[i].depth == 0:
+            print(text[i])
+        elif items[i].is_last:
+            print("│   " * (items[i].depth-1) + "└── " + text[i])
+        # elif items[i + 1].depth < items[i].depth:
+        #     print("│   " * (items[i].depth-1) + "└── " + text[i])
+        else:
+            print("│   " * (items[i].depth-1) + "├── " + text[i])
 
 
 # Need this method to stop printing bar under the last node of (last of its respective depth)
@@ -136,8 +148,7 @@ def main():
     assign_depth_and_whitespace(st_arr)
     calc_if_last(st_arr)
     calc_parent(st_arr)
-    # build_tree(st_arr)
-    magic(st_arr)
+    build_tree(st_arr)
 
 
 if __name__ == "__main__":
