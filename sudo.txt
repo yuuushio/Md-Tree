@@ -1,0 +1,11 @@
+
+recurse(i, items):
+  if i == len(items)-1:
+    // does not have a child/is the child
+
+  else:
+    // when there is a i+1 node, 3 options:
+    //    - i+1 has a None parent -- depth = 0
+    //    - i is NOT the parent of i+1 but its parent is not None either -- recurse(i, index-1, parent_index-1)
+
+    //    - i is the parent of i+1 -- print?; recurse(i, items)
