@@ -34,9 +34,9 @@ def assign_depth_and_whitespace(st_arr):
         v = s.val
         s.whitespace = len(re.match(r"^\s*", v).group(0))
         whitespace_arr.append(s.whitespace)
-    
+
     l = [x for x in whitespace_arr if x != 0]
-    
+
     # depth 1 will have the minimum whitespace; everything else will be relative to that
     if l:
         # Incase the input file only contains items with depth 0 (or 1 item)
@@ -46,39 +46,46 @@ def assign_depth_and_whitespace(st_arr):
         if whitespace_arr[i] != 0:
             st_arr[i].depth = whitespace_arr[i] // min_whitespace
 
+
 # Mark all nodes in the dict as last-nodes
 def assign_last(di, cur_depth):
     for k, v in di.items():
-        # you only want to assign lasts for nodes that are greater than the depth the 
+        # You only want to assign lasts for nodes that are greater than the depth the
         #  pointer is currently pointing at
         if k > cur_depth:
             v.is_last = True
 
+
 def calc_last(arr):
+    # Dict that contains the last st-object for its respective depth/section
     d = {}
-    for i,item in enumerate(arr):
+    for i, item in enumerate(arr):
+        # Essentially acts as a pointer to the current depth
         cur_depth = item.depth
+        # The value for each depth gets replaced by the latest node of that depth
         d[item.depth] = item
+
         if i + 1 == len(arr):
             assign_last(d, -1)
         else:
-            if cur_depth < arr[i-1].depth:
-                arr[i-1].is_last = True
+            # Whenever there's a backwards change in depth
+            if cur_depth < arr[i - 1].depth:
+                arr[i - 1].is_last = True
+                # Assign last to all the nodes up till this pointer (not inclusive)
                 assign_last(d, cur_depth)
 
 
 def assign_parent(c, parent):
-    # usually done when current's space is less parent's space
+    # Usually done when current's space is less parent's space
     #   if tmp was parent, tmp now equals tmp.parent
     tmp = parent
     while c.whitespace < tmp.whitespace:
-        # it's back-tracking at this point so, prev nodes will have parents assigned to them
+        # It's back-tracking at this point so, prev nodes will have parents assigned to them
         if tmp.parent is not None:
             tmp = tmp.parent
-    # if the list has correct markdown syntax/indent, == should be g
+    # If the list has correct markdown syntax/indent, == should be g
     if c.whitespace == tmp.whitespace:
         c.parent = tmp.parent
-
 
 
 def print_grid(d_arr):
@@ -101,8 +108,9 @@ def construct_indent(grid):
 
 
 def print_final(indent_list, st_arr):
+    print(".")
     for i, item in enumerate(st_arr):
-        print(indent_list[i] + item.stripped_val, item.is_last)
+        print(indent_list[i] + item.stripped_val)
 
 
 def magic(arr):
@@ -119,10 +127,9 @@ def magic(arr):
     # Initialize grid, depth_0 (j=0) will always have a pre-space/indent of ""
     grid = [[None if j != 0 else s_c for j in range(len(arr))] for i in range(len(arr))]
 
+    # since we don't want to display the unicode characters past last depth 0 node
     past_last = False
 
-
-    # TODO: fix the whole thing by taking into account depth 0 in the iteration,
     # otherwise it's gonna write out string past the last depth 0 node
     for i in range(0, len(arr)):
         for j in range(len(arr)):
@@ -133,12 +140,10 @@ def magic(arr):
                         pre_space = s_a
                     elif grid[i - 1][j] == s_a:
                         pre_space = s_c
-                    # hmmmmmm
                     elif arr[i].is_last:
                         pre_space = s_b
-                    elif arr[i].is_last and arr[i].parent.is_last:
-                        pre_space = s_b
-                    # grid[i][j] = grid[i - 1][j - 1] + pre_space
+                    # elif arr[i].is_last and arr[i].parent.is_last:
+                    #     pre_space = s_b
                     grid[i][j] = pre_space
 
                 elif j == 1:
@@ -200,10 +205,8 @@ def magic(arr):
                         # depth 0 node is last
                         grid[i][0] = s_b
                     else:
-                        print(past_last)
+                        # Empty indent if we're past the last depth 0 node
                         grid[i][0] = s_d if past_last else s_c
-
-
 
     # print_grid(grid)
     print_final(construct_indent(grid), arr)
@@ -242,3 +245,4 @@ if __name__ == "__main__":
 # Tests #
 # - list with only 1 item
 # - list where all items are depth 0
+# - three depth 0 items, and one depth 1 item which is under the first item
