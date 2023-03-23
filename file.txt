@@ -1,17 +1,64 @@
-- Main item 1
-  - Sub-item 1.1
-    - Sub-sub-item 1.1.1
-    - Sub-sub-item 1.1.2
-  - Sub-item 1.2
-    - Numbered sub-sub-item 1.2.1
-    - Numbered sub-sub-item 1.2.2
-      - s3
-- Main item 2
-  - Sub-item 2.1
-    - Sub-sub-item 2.1.1
-  - Sub-item 2.2
-    - Sub-sub-item 2.2.1
-    - Sub-sub-item 2.2.2
-      - s-s-s-item 2.2.2.1
-    - sub-sub-item 2.2.3
-      - s3
+- Item 1
+  - Subitem 1a
+    - Sub-subitem 1a.1
+    - Sub-subitem 1a.2
+  - Subitem 1b
+    - Numbered subitem 1b.1
+    - Numbered subitem 1b.2
+      - Sub-subitem 1b.2a
+      - Sub-subitem 1b.2b
+  - Subitem 2a
+    - Sub-subitem 2a.1
+      - Sub-sub-subitem 2a.1a
+      - Sub-sub-subitem 2a.1b
+    - Sub-subitem 2a.2
+      - Numbered sub-subitem 2a.2.1
+      - Numbered sub-subitem 2a.2.2
+  - Subitem 2b
+    - Sub-subitem 2b.1
+      - Sub-sub-subitem 2b.1a
+      - Sub-sub-subitem 2b.1b
+    - Sub-subitem 2b.2
+      - Sub-sub-subitem 2b.2a
+      - Sub-sub-subitem 2b.2b
+        - Numbered sub-sub-subitem 2b.2b.1
+        - Numbered sub-sub-subitem 2b.2b.2
+- Item 2
+  - Subitem 2a
+    - Sub-subitem 2a.1
+      - Sub-sub-subitem 2a.1a
+      - Sub-sub-subitem 2a.1b
+    - Sub-subitem 2a.2
+      - Numbered sub-subitem 2a.2.1
+      - Numbered sub-subitem 2a.2.2
+  - Subitem 2b
+    - Sub-subitem 2b.1
+      - Sub-sub-subitem 2b.1a
+      - Sub-sub-subitem 2b.1b
+    - Sub-subitem 2b.2
+      - Sub-sub-subitem 2b.2a
+      - Sub-sub-subitem 2b.2b
+        - Numbered sub-sub-subitem 2b.2b.1
+        - Numbered sub-sub-subitem 2b.2b.2
+- Item 3
+  - Subitem 2a
+    - Sub-subitem 2a.1
+      - Sub-sub-subitem 2a.1a
+      - Sub-sub-subitem 2a.1b
+    - Sub-subitem 2a.2
+      - Numbered sub-subitem 2a.2.1
+      - Numbered sub-subitem 2a.2.2
+  - Subitem 2b
+    - Sub-subitem 2b.1
+      - Sub-sub-subitem 2b.1a
+      - Sub-sub-subitem 2b.1b
+    - Sub-subitem 2b.2
+      - Sub-sub-subitem 2b.2a
+      - Sub-sub-subitem 2b.2b
+        - Numbered sub-sub-subitem 2b.2b.1
+        - Numbered sub-sub-subitem 2b.2b.2
+  - Subitem 3a
+    - Sub-subitem 3a.1
+    - Sub-subitem 3a.2
+  - Subitem 3b
+    - Sub-subitem 3b.1

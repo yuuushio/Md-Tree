@@ -23,7 +23,7 @@ class St:
                 "depth:",
                 self.depth,
                 "is_last:",
-                self.is_last
+                self.is_last,
             )
 
 
@@ -32,8 +32,8 @@ def read_file():
         data = f.readlines()
         return [St(d) for d in data]
 
-def assign_true_value(st_arr):
 
+def assign_true_value(st_arr):
     text = []
 
     for i in st_arr:
@@ -42,6 +42,7 @@ def assign_true_value(st_arr):
         text.append(tmp.strip())
     for i in range(len(text)):
         st_arr[i].stripped_val = text[i]
+
 
 def assign_depth_and_whitespace(st_arr):
     whitespace_arr = []
@@ -56,9 +57,10 @@ def assign_depth_and_whitespace(st_arr):
         if whitespace_arr[i] != 0:
             st_arr[i].depth = whitespace_arr[i] // min_whitespace
 
+
 # Mark all nodes in the dict as last-nodes
 def assign_last(di):
-    for k,v in di.items():
+    for k, v in di.items():
         v.is_last = True
 
 
@@ -73,16 +75,16 @@ def calc_if_last(st_arr):
         if i + 1 == len(st_arr):
             assign_last(last_of_depth)
             last_of_depth.clear()
-        elif st_arr[i+1].depth < st_arr[i].depth:
+        elif st_arr[i + 1].depth < st_arr[i].depth:
             st_arr[i].is_last = True
             # if this node is last, but the next one is also a parent - we need to perform the if parent check as well
             # otherwise some of the items in the current dict will get overriden by items from the next parent's list
-            if st_arr[i+1].depth == 0:
+            if st_arr[i + 1].depth == 0:
                 del last_of_depth[0]
                 # next node is parent
                 assign_last(last_of_depth)
                 last_of_depth.clear()
-        elif st_arr[i+1].depth == 0:
+        elif st_arr[i + 1].depth == 0:
             del last_of_depth[0]
             # next node is parent
             assign_last(last_of_depth)
@@ -93,7 +95,7 @@ def assign_parent(c, parent):
     # usually done when current's space is less parent's space
     #   if tmp was parent, tmp now equals tmp.parent
     tmp = parent
-    while (c.whitespace < tmp.whitespace):
+    while c.whitespace < tmp.whitespace:
         # it's back-tracking at this point so, prev nodes will have parents assigned to them
         if tmp.parent is not None:
             tmp = tmp.parent
@@ -106,12 +108,15 @@ def tst(zzz):
     for z in zzz:
         z.print_val()
 
+
 def print_func():
     pass
+
 
 def print_grid(d_arr):
     for li in d_arr:
         print(li)
+
 
 def construct_indent(grid):
     # the grid will always be n by n
@@ -126,15 +131,17 @@ def construct_indent(grid):
         return_list.append(tmp)
     return return_list
 
+
 def print_final(indent_list, st_arr):
-    for i,item in enumerate(st_arr):
-        print(indent_list[i] + item.stripped_val)
+    for i, item in enumerate(st_arr):
+        print(indent_list[i] + item.stripped_val, item.is_last)
+
 
 # print("│   " * (items[i].depth-1) + "└── " + text[i])
 def magic(arr):
     # ^1: i'th item can have a max depth of i
     # item 0, d=0
-    # item 1, d=0,1 
+    # item 1, d=0,1
     # item 2, d=0,1,2
 
     s_a = "├── "
@@ -144,34 +151,35 @@ def magic(arr):
     s_d = "    "
 
     # Initialize grid, depth_0 (j=0) will always have a pre-space/indent of ""
-    grid = [[None if j!=0 else "" for j in range(len(arr))] for i in range(len(arr))]
-      
-    for i in range(1,len(arr)):
+    grid = [[None if j != 0 else "" for j in range(len(arr))] for i in range(len(arr))]
+
+    for i in range(1, len(arr)):
         for j in range(len(arr)):
             if j != 0 and arr[i].depth != 0:
                 if arr[i].depth == j and j == 1:
                     pre_space = ""
                     if not arr[i].is_last:
                         pre_space = s_a
-                    elif grid[i-1][j] == s_a:
+                    elif grid[i - 1][j] == s_a:
                         pre_space = s_c
                     elif arr[i].is_last and not arr[i].parent.is_last:
                         pre_space = s_a
                     elif arr[i].is_last and arr[i].parent.is_last:
                         pre_space = s_b
-                    grid[i][j] = grid[i-1][j-1] + pre_space
+                    grid[i][j] = grid[i - 1][j - 1] + pre_space
+
                 elif j == 1:
-                    if grid[i-1][j] == s_c:
+                    if grid[i - 1][j] == s_c:
                         grid[i][j] = s_c
-                    elif grid[i-1][j] == s_b:
+                    elif grid[i - 1][j] == s_b:
                         grid[i][j] = s_d
                     if j < i:
                         pre_space = ""
-                        if grid[i-1][j] == s_b:
+                        if grid[i - 1][j] == s_b:
                             pre_space = s_d
-                        elif grid[i-1][j] == s_a:
+                        elif grid[i - 1][j] == s_a:
                             pre_space = s_c
-                        elif grid[i-1][j] == s_c:
+                        elif grid[i - 1][j] == s_c:
                             pre_space = s_c
                         else:
                             pre_space = s_d
@@ -182,9 +190,9 @@ def magic(arr):
                         pre_space = s_b
                     elif not arr[i].is_last:
                         pre_space = s_a
-                    elif grid[i-1][j] == s_a:
+                    elif grid[i - 1][j] == s_a:
                         pre_space = s_c
-                    elif grid[i-1][j] == s_b:
+                    elif grid[i - 1][j] == s_b:
                         pre_space = s_d
                     grid[i][j] = pre_space
                 elif j > arr[i].depth:
@@ -192,9 +200,13 @@ def magic(arr):
                     break
                 elif j < i:
                     pre_space = ""
-                    if grid[i-1][j] == s_b:
+                    if grid[i - 1][j] == s_b:
                         pre_space = s_d
-                    elif grid[i-1][j] == s_a:
+
+                    elif grid[i - 1][j] == s_a:
+                        pre_space = s_c
+
+                    elif grid[i - 1][j] == s_c:
                         pre_space = s_c
                     else:
                         pre_space = s_d
@@ -206,17 +218,11 @@ def magic(arr):
                     # i-1][j-1] ...
                     break
 
-
-
-
-    print_grid(grid) 
+    print_grid(grid)
     print_final(construct_indent(grid), arr)
     # print(len(grid))
     # for i,item in enumerate(arr):
-    #     print(grid[i][item.depth] + item.stripped_val + " ", item.is_last) 
-
-
-
+    #     print(grid[i][item.depth] + item.stripped_val + " ", item.is_last)
 
 
 # Need this method to stop printing bar under the last node of (last of its respective depth)
@@ -227,13 +233,12 @@ def calc_parent(st_li):
     for i in range(len(st_li)):
         if i == 0:
             continue
-        if st_li[i].whitespace < st_li[i-1].whitespace:
-            assign_parent(st_li[i], st_li[i-1])
-        elif st_li[i].whitespace == st_li[i-1].whitespace:
-            st_li[i].parent = st_li[i-1].parent
+        if st_li[i].whitespace < st_li[i - 1].whitespace:
+            assign_parent(st_li[i], st_li[i - 1])
+        elif st_li[i].whitespace == st_li[i - 1].whitespace:
+            st_li[i].parent = st_li[i - 1].parent
         else:
-            st_li[i].parent = st_li[i-1]
-
+            st_li[i].parent = st_li[i - 1]
 
     return st_li
 
