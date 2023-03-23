@@ -4,7 +4,6 @@ import re
 class St:
     def __init__(self, val):
         self.val = val
-        self.parent = None
         self.whitespace = 0
         self.depth = 0
         self.is_last = False
@@ -75,20 +74,8 @@ def calc_last(arr):
                 assign_last(d, cur_depth)
 
 
-def assign_parent(c, parent):
-    # Usually done when current's space is less parent's space
-    #   if tmp was parent, tmp now equals tmp.parent
-    tmp = parent
-    while c.whitespace < tmp.whitespace:
-        # It's back-tracking at this point so, prev nodes will have parents assigned to them
-        if tmp.parent is not None:
-            tmp = tmp.parent
-    # If the list has correct markdown syntax/indent, == should be g
-    if c.whitespace == tmp.whitespace:
-        c.parent = tmp.parent
-
-
 def print_grid(d_arr):
+    # debug purposes
     for li in d_arr:
         print(li)
 
@@ -212,29 +199,10 @@ def magic(arr):
     print_final(construct_indent(grid), arr)
 
 
-# Need this method to stop printing bar under the last node of (last of its respective depth)
-# O(n^2) because we are iterating back to calculate the parent of the node,
-#   and in the worst case, this parent is at index 1
-def calc_parent(st_li):
-    # parent = [i-1]
-    for i in range(len(st_li)):
-        if i == 0:
-            continue
-        if st_li[i].whitespace < st_li[i - 1].whitespace:
-            assign_parent(st_li[i], st_li[i - 1])
-        elif st_li[i].whitespace == st_li[i - 1].whitespace:
-            st_li[i].parent = st_li[i - 1].parent
-        else:
-            st_li[i].parent = st_li[i - 1]
-
-    return st_li
-
-
 def main():
     st_arr = read_file()
     assign_depth_and_whitespace(st_arr)
     calc_last(st_arr)
-    calc_parent(st_arr)
     assign_true_value(st_arr)
     magic(st_arr)
 
