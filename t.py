@@ -113,6 +113,22 @@ def print_grid(d_arr):
     for li in d_arr:
         print(li)
 
+def construct_indent(grid):
+    # the grid will always be n by n
+    return_list = []
+    for i in range(len(grid)):
+        tmp = ""
+        for j in range(len(grid)):
+            if grid[i][j] == None:
+                break
+            else:
+                tmp += grid[i][j]
+        return_list.append(tmp)
+    return return_list
+
+def print_final(indent_list, st_arr):
+    for i,item in enumerate(st_arr):
+        print(indent_list[i] + item.stripped_val)
 
 # print("│   " * (items[i].depth-1) + "└── " + text[i])
 def magic(arr):
@@ -145,7 +161,6 @@ def magic(arr):
                         pre_space = s_b
                     grid[i][j] = grid[i-1][j-1] + pre_space
                 elif j == 1:
-                    print(i,j,"found 2 1 ...")
                     if grid[i-1][j] == s_c:
                         grid[i][j] = s_c
                     elif grid[i-1][j] == s_b:
@@ -155,6 +170,8 @@ def magic(arr):
                         if grid[i-1][j] == s_b:
                             pre_space = s_d
                         elif grid[i-1][j] == s_a:
+                            pre_space = s_c
+                        elif grid[i-1][j] == s_c:
                             pre_space = s_c
                         else:
                             pre_space = s_d
@@ -174,7 +191,6 @@ def magic(arr):
                     # break inner loop as per rule ^1
                     break
                 elif j < i:
-                    print(i,j)
                     pre_space = ""
                     if grid[i-1][j] == s_b:
                         pre_space = s_d
@@ -193,9 +209,9 @@ def magic(arr):
 
 
 
-
-
-    print_grid(grid)
+    print_grid(grid) 
+    print_final(construct_indent(grid), arr)
+    # print(len(grid))
     # for i,item in enumerate(arr):
     #     print(grid[i][item.depth] + item.stripped_val + " ", item.is_last) 
 
