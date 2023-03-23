@@ -1,4 +1,6 @@
 import re
+import argparse
+import os
 
 
 class St:
@@ -10,8 +12,8 @@ class St:
         self.stripped_val = ""
 
 
-def read_file():
-    with open("file.txt", "r") as f:
+def read_file(file):
+    with open(file, "r") as f:
         data = f.readlines()
         return [St(d) for d in data]
 
@@ -129,8 +131,6 @@ def magic(arr):
                         pre_space = s_c
                     elif arr[i].is_last:
                         pre_space = s_b
-                    # elif arr[i].is_last and arr[i].parent.is_last:
-                    #     pre_space = s_b
                     grid[i][j] = pre_space
 
                 elif j == 1:
@@ -200,11 +200,25 @@ def magic(arr):
 
 
 def main():
-    st_arr = read_file()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-f", "--file", help="File containing the markdown-style list.", required=True
+    )
+    try:
+        args = parser.parse_args()
+    except:
+        parser.print_help()
+        exit(0)
+
+    if not os.path.isfile(args.file):
+        print(f"Path or file not valid.")
+
+    st_arr = read_file(args.file)
+
     assign_depth_and_whitespace(st_arr)
     calc_last(st_arr)
     assign_true_value(st_arr)
-    magic(st_arr)
+    magic(st_arr)  # TODO rename function
 
 
 if __name__ == "__main__":
