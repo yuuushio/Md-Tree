@@ -145,7 +145,6 @@ def magic(arr):
     # item 2, d=0,1,2
 
     s_a = "├── "
-
     s_b = "└── "
     s_c = "│   "
     s_d = "    "
@@ -220,9 +219,6 @@ def magic(arr):
 
     print_grid(grid)
     print_final(construct_indent(grid), arr)
-    # print(len(grid))
-    # for i,item in enumerate(arr):
-    #     print(grid[i][item.depth] + item.stripped_val + " ", item.is_last)
 
 
 # Need this method to stop printing bar under the last node of (last of its respective depth)
