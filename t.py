@@ -9,25 +9,6 @@ class St:
         self.depth = 0
         self.is_last = False
         self.stripped_val = ""
-        self.is_last_test = False
-
-    # for debugging purposes
-    def print_val(self):
-        if self.parent is None:
-            print("val:", self.val, "parent:", None)
-        else:
-            print(
-                "val:",
-                self.val,
-                "parent:",
-                self.parent.val,
-                "depth:",
-                self.depth,
-                "is_last:",
-                self.is_last,
-                "is_last_TEST",
-                self.is_last_test
-            )
 
 
 def read_file():
@@ -53,68 +34,37 @@ def assign_depth_and_whitespace(st_arr):
         v = s.val
         s.whitespace = len(re.match(r"^\s*", v).group(0))
         whitespace_arr.append(s.whitespace)
-
+    
+    l = [x for x in whitespace_arr if x != 0]
+    
     # depth 1 will have the minimum whitespace; everything else will be relative to that
-    min_whitespace = min(x for x in whitespace_arr if x != 0)
+    if l:
+        # Incase the input file only contains items with depth 0 (or 1 item)
+        min_whitespace = min(l)
+
     for i in range(len(st_arr)):
         if whitespace_arr[i] != 0:
             st_arr[i].depth = whitespace_arr[i] // min_whitespace
 
-
 # Mark all nodes in the dict as last-nodes
-def assign_last(di):
-    for k, v in di.items():
-        # you only want to assign lasts for nodes that are greater than the depth the 
-        #  pointer is currently pointing at
-        v.is_last = True
-
-def assign_last_test(di, cur_depth):
+def assign_last(di, cur_depth):
     for k, v in di.items():
         # you only want to assign lasts for nodes that are greater than the depth the 
         #  pointer is currently pointing at
         if k > cur_depth:
             v.is_last = True
 
-def calc_last_new(arr):
+def calc_last(arr):
     d = {}
     for i,item in enumerate(arr):
-        if len(arr) == 1:
-            item.is_last = True
-        # elif item.depth == 0:
-        #     continue
+        cur_depth = item.depth
+        d[item.depth] = item
+        if i + 1 == len(arr):
+            assign_last(d, -1)
         else:
-            cur_depth = item.depth
-            d[cur_depth] = item
             if cur_depth < arr[i-1].depth:
-                assign_last_test(d, cur_depth)
-
-
-
-def calc_if_last(st_arr):
-    # {depth, node} dict
-    last_of_depth = {}
-    for i in range(len(st_arr)):
-        # This list contains the last node of each depth
-        last_of_depth[st_arr[i].depth] = st_arr[i]
-
-        # last item
-        if i + 1 == len(st_arr):
-            assign_last(last_of_depth)
-            last_of_depth.clear()
-        elif st_arr[i + 1].depth < st_arr[i].depth:
-            st_arr[i].is_last = True
-            # if this node is last, but the next one is also a parent - we need to perform the if parent check as well
-            # otherwise some of the items in the current dict will get overriden by items from the next parent's list
-            if st_arr[i + 1].depth == 0:
-                del last_of_depth[0]
-                # next node is parent
-                assign_last(last_of_depth)
-                last_of_depth.clear()
-        elif st_arr[i + 1].depth == 0:
-            del last_of_depth[0]
-            # next node is parent
-            assign_last(last_of_depth)
-            last_of_depth.clear()
+                arr[i-1].is_last = True
+                assign_last(d, cur_depth)
 
 
 def assign_parent(c, parent):
@@ -129,14 +79,6 @@ def assign_parent(c, parent):
     if c.whitespace == tmp.whitespace:
         c.parent = tmp.parent
 
-
-def tst(zzz):
-    for z in zzz:
-        z.print_val()
-
-
-def print_func():
-    pass
 
 
 def print_grid(d_arr):
@@ -175,9 +117,14 @@ def magic(arr):
     s_d = "    "
 
     # Initialize grid, depth_0 (j=0) will always have a pre-space/indent of ""
-    grid = [[None if j != 0 else "" for j in range(len(arr))] for i in range(len(arr))]
+    grid = [[None if j != 0 else s_c for j in range(len(arr))] for i in range(len(arr))]
 
-    for i in range(1, len(arr)):
+    past_last = False
+
+
+    # TODO: fix the whole thing by taking into account depth 0 in the iteration,
+    # otherwise it's gonna write out string past the last depth 0 node
+    for i in range(0, len(arr)):
         for j in range(len(arr)):
             if j != 0 and arr[i].depth != 0:
                 if arr[i].depth == j and j == 1:
@@ -186,11 +133,13 @@ def magic(arr):
                         pre_space = s_a
                     elif grid[i - 1][j] == s_a:
                         pre_space = s_c
-                    elif arr[i].is_last and not arr[i].parent.is_last:
-                        pre_space = s_a
+                    # hmmmmmm
+                    elif arr[i].is_last:
+                        pre_space = s_b
                     elif arr[i].is_last and arr[i].parent.is_last:
                         pre_space = s_b
-                    grid[i][j] = grid[i - 1][j - 1] + pre_space
+                    # grid[i][j] = grid[i - 1][j - 1] + pre_space
+                    grid[i][j] = pre_space
 
                 elif j == 1:
                     if grid[i - 1][j] == s_c:
@@ -241,8 +190,22 @@ def magic(arr):
                     # j == i
                     # i-1][j-1] ...
                     break
+            else:
+                # depth == 0
+                if arr[i].depth == 0 and not arr[i].is_last:
+                    grid[i][0] = s_a
+                else:
+                    if arr[i].depth == 0 and arr[i].is_last:
+                        past_last = True
+                        # depth 0 node is last
+                        grid[i][0] = s_b
+                    else:
+                        print(past_last)
+                        grid[i][0] = s_d if past_last else s_c
 
-    print_grid(grid)
+
+
+    # print_grid(grid)
     print_final(construct_indent(grid), arr)
 
 
@@ -267,13 +230,15 @@ def calc_parent(st_li):
 def main():
     st_arr = read_file()
     assign_depth_and_whitespace(st_arr)
-    calc_if_last(st_arr)
+    calc_last(st_arr)
     calc_parent(st_arr)
-    # build_tree(st_arr)
     assign_true_value(st_arr)
-    calc_last_new(st_arr)
     magic(st_arr)
 
 
 if __name__ == "__main__":
     main()
+
+# Tests #
+# - list with only 1 item
+# - list where all items are depth 0
