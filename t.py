@@ -9,6 +9,7 @@ class St:
         self.depth = 0
         self.is_last = False
         self.stripped_val = ""
+        self.is_last_test = False
 
     # for debugging purposes
     def print_val(self):
@@ -24,6 +25,8 @@ class St:
                 self.depth,
                 "is_last:",
                 self.is_last,
+                "is_last_TEST",
+                self.is_last_test
             )
 
 
@@ -61,7 +64,30 @@ def assign_depth_and_whitespace(st_arr):
 # Mark all nodes in the dict as last-nodes
 def assign_last(di):
     for k, v in di.items():
+        # you only want to assign lasts for nodes that are greater than the depth the 
+        #  pointer is currently pointing at
         v.is_last = True
+
+def assign_last_test(di, cur_depth):
+    for k, v in di.items():
+        # you only want to assign lasts for nodes that are greater than the depth the 
+        #  pointer is currently pointing at
+        if k > cur_depth:
+            v.is_last = True
+
+def calc_last_new(arr):
+    d = {}
+    for i,item in enumerate(arr):
+        if len(arr) == 1:
+            item.is_last = True
+        # elif item.depth == 0:
+        #     continue
+        else:
+            cur_depth = item.depth
+            d[cur_depth] = item
+            if cur_depth < arr[i-1].depth:
+                assign_last_test(d, cur_depth)
+
 
 
 def calc_if_last(st_arr):
@@ -137,7 +163,6 @@ def print_final(indent_list, st_arr):
         print(indent_list[i] + item.stripped_val, item.is_last)
 
 
-# print("│   " * (items[i].depth-1) + "└── " + text[i])
 def magic(arr):
     # ^1: i'th item can have a max depth of i
     # item 0, d=0
@@ -246,6 +271,7 @@ def main():
     calc_parent(st_arr)
     # build_tree(st_arr)
     assign_true_value(st_arr)
+    calc_last_new(st_arr)
     magic(st_arr)
 
 
