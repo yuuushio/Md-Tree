@@ -117,11 +117,11 @@ def build_tree(items):
         if items[i].depth == 0:
             print(text[i])
         elif items[i].is_last:
-            print("│   " * (items[i].depth-1) + "└── " + text[i])
+            print("│   " * (items[i].depth-1) + "└── " + text[i], items[i].is_last)
         # elif items[i + 1].depth < items[i].depth:
         #     print("│   " * (items[i].depth-1) + "└── " + text[i])
         else:
-            print("│   " * (items[i].depth-1) + "├── " + text[i])
+            print("│   " * (items[i].depth-1) + "├── " + text[i], items[i].is_last)
 
 
 # Need this method to stop printing bar under the last node of (last of its respective depth)
