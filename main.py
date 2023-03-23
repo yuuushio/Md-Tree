@@ -1,4 +1,5 @@
 import re
+import sys
 import argparse
 import os
 
@@ -208,7 +209,7 @@ def main():
         args = parser.parse_args()
     except:
         parser.print_help()
-        exit(0)
+        sys.exit()
 
     if not os.path.isfile(args.file):
         print(f"Path or file not valid.")
@@ -225,6 +226,6 @@ if __name__ == "__main__":
     main()
 
 # Tests #
-# - list with only 1 item
-# - list where all items are depth 0
-# - three depth 0 items, and one depth 1 item which is under the first item
+# - [x] list with only 1 item
+# - [x] list where all items are depth 0
+# - [x] three depth 0 items, and one depth 1 item which is under the first item
