@@ -83,6 +83,7 @@ def print_grid(d_arr):
         print(li)
 
 
+# List containing the final pre-space/indent/unicode-chars for each item
 def construct_indent(grid):
     # the grid will always be n by n
     return_list = []
@@ -97,13 +98,13 @@ def construct_indent(grid):
     return return_list
 
 
-def print_final(indent_list, st_arr):
+def print_tree(indent_list, st_arr):
     print(".")
     for i, item in enumerate(st_arr):
         print(indent_list[i] + item.stripped_val)
 
 
-def magic(arr):
+def make_prespace_grid(arr):
     # ^1: i'th item can have a max depth of i
     # item 0, d=0
     # item 1, d=0,1
@@ -197,7 +198,7 @@ def magic(arr):
                         grid[i][0] = s_d if past_last else s_c
 
     # print_grid(grid)
-    print_final(construct_indent(grid), arr)
+    print_tree(construct_indent(grid), arr)
 
 
 def main():
@@ -219,7 +220,7 @@ def main():
     assign_depth_and_whitespace(st_arr)
     calc_last(st_arr)
     assign_true_value(st_arr)
-    magic(st_arr)  # TODO rename function
+    make_prespace_grid(st_arr)  
 
 
 if __name__ == "__main__":

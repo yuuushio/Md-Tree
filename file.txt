@@ -1,5 +1,26 @@
-- Item 1
-  - Subitem 1a
-- Sub-subitem 1a.1
-- Sub-subitem 1a.1
-- Sub-subitem 1a.1
+- Project Example
+  - Docs
+    - User Guide
+      - Getting Started.md
+      - Advanced Topics.md
+    - API Reference
+      - Authentication.md
+      - Endpoints.md
+  - Source Code
+    - Client
+      - main.py
+      - utils.py
+    - Server
+      - app.py
+      - models.py
+      - utils.py
+    - Tests
+      - Client
+        - test_main.py
+        - test_utils.py
+      - Server
+        - test_app.py
+        - test_models.py
+  - Config
+    - dev.env
+    - prod.env
