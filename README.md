@@ -31,9 +31,10 @@ Md-Tree is a Python program that takes in a markdown-style list from a file and 
 python main.py --file ~/path/to/file.txt
 ```
 
-### Note
+### Important Notes
 
-For the input list, it is recommended to use tabs for indentation, and `-` to indicate the beginning of an list-item.
+- For the input list, it is recommended to use tabs for indentation, and `-` to indicate the beginning of an list-item.
+- Make sure the list in the input file doesn't have any **blank** lines; this includes making sure the file doesn't end with one either.
 
 #### TODO
 - Make it efficient (runs in `O(n^2)` atm) and remove redundant checks/conditions.
