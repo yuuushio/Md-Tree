@@ -36,14 +36,12 @@ def assign_depth_and_whitespace(st_arr):
         v = s.val
         s.whitespace = len(re.match(r"^\s*", v).group(0))
         whitespace_arr.append(s.whitespace)
-
+    
     l = [x for x in whitespace_arr if x != 0]
-
     # depth 1 will have the minimum whitespace; everything else will be relative to that
     if l:
         # Incase the input file only contains items with depth 0 (or 1 item)
         min_whitespace = min(l)
-
     for i in range(len(st_arr)):
         if whitespace_arr[i] != 0:
             st_arr[i].depth = whitespace_arr[i] // min_whitespace
@@ -129,10 +127,10 @@ def make_prespace_grid(arr):
                     pre_space = ""
                     if not arr[i].is_last:
                         pre_space = s_a
-                    elif grid[i - 1][j] == s_a:
-                        pre_space = s_c
                     elif arr[i].is_last:
                         pre_space = s_b
+                    elif grid[i - 1][j] == s_a:
+                        pre_space = s_c
                     grid[i][j] = pre_space
 
                 elif j == 1:

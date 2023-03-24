@@ -1,26 +1,7 @@
-- Project Example
-  - Docs
-    - User Guide
-      - Getting Started.md
-      - Advanced Topics.md
-    - API Reference
-      - Authentication.md
-      - Endpoints.md
-  - Source Code
-    - Client
-      - main.py
-      - utils.py
-    - Server
-      - app.py
-      - models.py
-      - utils.py
-    - Tests
-      - Client
-        - test_main.py
-        - test_utils.py
-      - Server
-        - test_app.py
-        - test_models.py
-  - Config
-    - dev.env
-    - prod.env
+- Field/Broad-topic (Comp Sci)
+  - Topic/Category
+- Field/Broad-topic (Science)
+  - Subfield
+- Field/Broad-topic (Books)
+  - Category (Fiction)
+    - File or sub-category
