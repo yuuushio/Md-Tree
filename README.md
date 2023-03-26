@@ -38,4 +38,5 @@ python main.py --file ~/path/to/file.txt
 
 #### TODO
 - Make it efficient (runs in `O(n^2)` atm) and remove redundant checks/conditions.
+- Check if all the `.is_last` checks are in the right order.
 
