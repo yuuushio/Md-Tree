@@ -36,7 +36,3 @@ python main.py --file ~/path/to/file.txt
 - For the input list, it is recommended to use tabs for indentation, and `-` to indicate the beginning of an list-item.
 - Make sure the list in the input file doesn't have any **blank** lines; this includes making sure the file doesn't end with one either.
 
-#### TODO
-- Make it efficient (runs in `O(n^2)` atm) and remove redundant checks/conditions.
-- Check if all the `.is_last` checks are in the right order.
-
